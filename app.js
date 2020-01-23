@@ -18,6 +18,26 @@ console.log(dyani.getName());
 
 function appMenu() {
     function createManager() {
+        const questions = [
+            {
+                type: "input",
+                name: "username",
+                message: "What is your Github username?"
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "What is your email?"
+            },
+            {
+                type: "input",
+                name: "id",
+                message: "What is your ID?"
+            },
+            {
+                
+            }
+        ]
         // promp questions from inquirer
         // take answers from questions and create new instance of class
         // push instance to empty array 
@@ -25,8 +45,7 @@ function appMenu() {
     }
     function createTeam() {
         //inquirer prompt/ choose team
-        //
-        //
+        
     }
     function addEngineer() {
         
