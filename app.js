@@ -13,31 +13,11 @@ const outputPath = path.resolve(__dirname, "output", "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const dyani = new Employee ("Dyani", "222", "gmail")
+const dyani = new Employee("Dyani", "222", "gmail")
 console.log(dyani.getName());
 
 function appMenu() {
     function createManager() {
-        const questions = [
-            {
-                type: "input",
-                name: "username",
-                message: "What is your Github username?"
-            },
-            {
-                type: "input",
-                name: "email",
-                message: "What is your email?"
-            },
-            {
-                type: "input",
-                name: "id",
-                message: "What is your ID?"
-            },
-            {
-                
-            }
-        ]
         // promp questions from inquirer
         // take answers from questions and create new instance of class
         // push instance to empty array 
@@ -45,16 +25,79 @@ function appMenu() {
     }
     function createTeam() {
         //inquirer prompt/ choose team
-        
+
     }
     function addEngineer() {
-        
+
     }
     function addIntern() {
-        
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "internName",
+                message: "What is your name?",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter required info.";
+                }
+
+            },
+            {
+                type: "input",
+                name: "internId",
+                message: "What is your ID?",
+                validate: answer => {
+                    const pass = answer.match(
+                        123
+                    );
+                    if (pass) {
+                        if (idArray.includes(answer)) {
+                            return "Please choose a different ID number";
+                        } else {
+                            return true;
+                        }
+                    }
+                    return "Please enter a number.";
+                }
+
+            },
+            {
+                type: "input",
+                name: "internEmail",
+                message: "Please enter your email address.",
+                validate: answer => {
+                    const pass = answer.match(
+                        /\S+@\S+\.\S+/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return "Please enter a valid email.";
+                }
+            },
+            {
+                type: "input",
+                name: "internSchool",
+                message: "What school did you attend?",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter a school.";
+                }
+            }
+        ]).then(answers => {
+            const { internName, internId, internEmail, InternSchool } = answers;
+            const intern = new Intern(internName, internId, internEmail, InternSchool);
+            teamMembers.push(intern);
+            idArray.push(internId);
+            buildTeam();
+        });
     }
     function buildTeam() {
-        
+
     }
     createManager()
 }
