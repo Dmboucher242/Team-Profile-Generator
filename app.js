@@ -18,6 +18,14 @@ console.log(dyani.getName());
 
 function appMenu() {
     function createManager() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "managerName",
+                message: "What is your name?",
+                validate: v
+            }
+        ])
         // promp questions from inquirer
         // take answers from questions and create new instance of class
         // push instance to empty array 
@@ -28,6 +36,64 @@ function appMenu() {
 
     }
     function addEngineer() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "engineerName",
+                message: "What is your name?",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter your name.";
+                },
+            },
+            {
+                type: "input",
+                name: "engineerId",
+                message: "What is your ID?",
+                validate: answer => {
+                    const pass = answer.match(
+                        123
+                    );
+                    if (pass) {
+                        if (idArray.includes(answer)) {
+                            return "Please choose a different ID number";
+                        } else {
+                            return true;
+                        }
+                    }
+                    return "Please enter a number.";
+                }
+            },
+            {
+                type: "input",
+                name: "engineerEmail",
+                message: "What is your email?",
+                validate: answer => {
+                    const pass = answer.match(
+                        /\S+@\S+\.\S+/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return "Please enter a valid email.";
+                }
+            },
+            {
+                type: "input",
+                name: "engineerGithub",
+                message: "What is your GitHub username?",
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter your username.";
+                }
+            }
+
+
+        ])
 
     }
     function addIntern() {
@@ -42,7 +108,6 @@ function appMenu() {
                     }
                     return "Please enter required info.";
                 }
-
             },
             {
                 type: "input",
@@ -61,7 +126,6 @@ function appMenu() {
                     }
                     return "Please enter a number.";
                 }
-
             },
             {
                 type: "input",
