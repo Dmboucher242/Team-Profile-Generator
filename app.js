@@ -23,15 +23,90 @@ function appMenu() {
                 type: "input",
                 name: "managerName",
                 message: "What is your name?",
-                validate: v
+                validate: answer => {
+                    if (answer !== "") {
+                        return true;
+                    }
+                    return "Please enter your name.";
+                }
+            },
+            {
+                type: "input",
+                name: "managerEmail",
+                message: "What is your email?",
+                validate: answer => {
+                    const pass = answer.match(
+                        /\S+@\S+\.\S+/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return "Please enter a valid email.";
+                }
+            },
+            {
+                type: "input",
+                name: "managerId",
+                message: "What is you ID?",
+                validate: answer => {
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                    );
+                    if (pass) {
+                        if (idArray.includes(answer)) {
+                            return "Please choose a different ID number";
+                        } else {
+                            return true;
+                        }
+                    }
+                    return "Please enter a number.";
+                }
+            },
+            {
+                type: "input",
+                name: "managerOffice",
+                message: "What is your office number?",
+
             }
-        ])
+
+        ]).then(answers => {
+            const { managerName, managerId, managerEmail, officeNumber} = answers;
+            const manager = new Manager(managerName, managerId, managerEmail, officeNumber);
+            teamMembers.push(manager);
+            idArray.push(managerId);
+            buildTeam();
+        });
         // promp questions from inquirer
         // take answers from questions and create new instance of class
         // push instance to empty array 
         // run createTeam
     }
     function createTeam() {
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "createTeam",
+                message: "Who you like to add to your team?",
+                choices: [
+                    "Engineer",
+                    "Intern",
+                    "I don't want to add anymore team member"
+                ]
+            }
+        ])
+            .then((answers) => {
+                switch (answers.createTeam) {
+                    case "Engineer":
+                        addEngineer()
+                        break;
+                    case "Intern":
+                        addIntern()
+                        break;
+                    default:
+                        builtTeam()
+                        break;
+                }
+            })
         //inquirer prompt/ choose team
 
     }
@@ -91,10 +166,13 @@ function appMenu() {
                     return "Please enter your username.";
                 }
             }
-
-
-        ])
-
+        ]).then(answers => {
+            const { internName, internId, internEmail, InternSchool } = answers;
+            const intern = new Intern(internName, internId, internEmail, InternSchool);
+            teamMembers.push(intern);
+            idArray.push(internId);
+            buildTeam();
+        });
     }
     function addIntern() {
         inquirer.prompt([
@@ -161,7 +239,7 @@ function appMenu() {
         });
     }
     function buildTeam() {
-
+        fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
     }
     createManager()
 }
