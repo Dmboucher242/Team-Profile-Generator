@@ -13,8 +13,6 @@ const outputPath = path.resolve(__dirname, "output", "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const dyani = new Employee("Dyani", "222", "gmail")
-console.log(dyani.getName());
 
 function appMenu() {
     function createManager() {
@@ -70,8 +68,7 @@ function appMenu() {
             }
 
         ]).then(answers => {
-            const { managerName, managerId, managerEmail, officeNumber} = answers;
-            const manager = new Manager(managerName, managerId, managerEmail, officeNumber);
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.officeNumber);
             teamMembers.push(manager);
             idArray.push(managerId);
             buildTeam();
@@ -167,10 +164,9 @@ function appMenu() {
                 }
             }
         ]).then(answers => {
-            const { internName, internId, internEmail, InternSchool } = answers;
-            const intern = new Intern(internName, internId, internEmail, InternSchool);
-            teamMembers.push(intern);
-            idArray.push(internId);
+            const engineer = new engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+            teamMembers.push(engineer);
+            idArray.push(engineerId);
             buildTeam();
         });
     }
@@ -231,8 +227,7 @@ function appMenu() {
                 }
             }
         ]).then(answers => {
-            const { internName, internId, internEmail, InternSchool } = answers;
-            const intern = new Intern(internName, internId, internEmail, InternSchool);
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.InternSchool);
             teamMembers.push(intern);
             idArray.push(internId);
             buildTeam();
